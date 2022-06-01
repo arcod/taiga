@@ -1,7 +1,6 @@
 body {
     background-color: white;
     margin: 0;
-}
-canvas {
-    border:1px solid red;
+    padding: 0;
+    overflow: hidden;
 }
