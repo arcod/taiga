@@ -2,8 +2,8 @@ class hexBoard {
     constructor() {
         this.hexTiles = [];
 
-        //map that converts QRS coords -> xy coords
-        this.qrs2xy = new Map();
+        //map that converts QRS -> ID of tile at that position
+        this.qrs2id = new Map();
     }
     draw() {
         for (var i in this.hexTiles) {

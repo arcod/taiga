@@ -1,6 +1,7 @@
 class hex {
     constructor(id, q, r, s, x, y) {
         this.id = id;
+        
         //cube coordinates of tile
         this.q = q;
         this.r = r;

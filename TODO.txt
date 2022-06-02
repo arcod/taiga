@@ -1,0 +1,6 @@
+compact createTiles() function
+    impliment a Map that converts qrs -> id of tile
+
+
+impliment Dijkstra's algorithm for pathfinding between tiles
+    needs dijkstra's because some tiles will have costs to get through

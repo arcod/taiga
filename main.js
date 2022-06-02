@@ -4,7 +4,15 @@ var ctx = canvas.getContext("2d");
 
 //calculations for hex drawing and size
 const a = 2 * Math.PI / 6;
+const sqrt3 = Math.sqrt(3);
 const radius = 50;
+
+function qrs2xy(q,r,s) { //https://www.reddit.com/r/askmath/comments/s6u33s/converting_cube_coordinates_to_cartesian/
+	return [
+		(r/2 - s/2)*radius*2,
+		((r+s)*sqrt3/2)*radius*2
+	]
+}
 
 //debug
 var debug = true;
