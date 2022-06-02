@@ -6,6 +6,8 @@ var ctx = canvas.getContext("2d");
 const a = 2 * Math.PI / 6;
 const radius = 50;
 
+//debug
+var debug = true;
 
 //mouse positions
 var mouseX = 0;
@@ -33,6 +35,7 @@ console.log(board.hexTiles);
 
 
 function update() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
   	board.draw();
   	window.requestAnimationFrame(update)
 }

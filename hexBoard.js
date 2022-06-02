@@ -1,28 +1,32 @@
 class hexBoard {
     constructor() {
         this.hexTiles = [];
+
+        //map that converts QRS coords -> xy coords
+        this.qrs2xy = new Map();
     }
     draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (var i in this.hexTiles) {
             if (this.hexTiles[i].isPointInside(mouseX, mouseY)) {
                 this.hexTiles[i].highlight(); //highlight the tile
             } else {
                 this.hexTiles[i].highlight(false); //un-highlight the tile
             }
-            this.hexTiles[i].redraw();
+            this.hexTiles[i].draw();
         }
     }
     createTiles(layers) {
         //x and y are location of center, q r and s are cube coordinates for hex grid
         var x = 0;
         var y = 0;
-        var id = 1;
+        var id = 0;
         var q = 0;
         var r = 0;
         var s = 0;
 
+        //create the center tile
         this.hexTiles.push(new hex(id, q, r, s, x, y));
+
         for (let j = 0; j < layers; j++) {
             id++;
             y += (radius + 5) * Math.sqrt(3);

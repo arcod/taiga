@@ -15,7 +15,7 @@ class hex {
         this.stroke = "black";
         this.radius = radius;
     }
-    draw(stroke) {
+    drawCanv(stroke) {
         ctx.beginPath();
         ctx.strokeStyle = stroke;
         for (var i = 0; i < 6; i++) {
@@ -23,11 +23,26 @@ class hex {
         }
         ctx.closePath();
         ctx.stroke();
+
+        if(debug) {
+            var fontSize = 12;
+
+            ctx.textAlign = "center";
+            ctx.font = fontSize+"px Arial";
+            ctx.fillText("id="+this.id, this.x + canvas.width / 2, this.y+fontSize*0 + canvas.height / 2);
+            ctx.fillText("q="+this.q, this.x + canvas.width / 2, this.y+fontSize*1 + canvas.height / 2);
+            ctx.fillText("r="+this.r, this.x + canvas.width / 2, this.y+fontSize*2 + canvas.height / 2);
+            ctx.fillText("s="+this.s, this.x + canvas.width / 2, this.y+fontSize*3 + canvas.height / 2);
+        }
     }
     highlight(bool = true) {
+        //without arg, it highlights it
+        //with arg, it sets the highlight state to the arg
+
         this.highlighted = bool;
     }
-    redraw(x, y) {
+    draw(x, y) {
+        //if args exist, draw there
         this.x = x || this.x;
         this.y = y || this.y;
 
@@ -35,7 +50,7 @@ class hex {
 
         if (this.highlighted) strokeToDraw = "orange";
 
-        this.draw(strokeToDraw);
+        this.drawCanv(strokeToDraw);
     }
     isPointInside(x, y) {
         return (x >= this.x - this.radius
