@@ -1,15 +1,19 @@
 class hex {
     constructor(id, q, r, s, x, y) {
         this.id = id;
-        
+
         //cube coordinates of tile
         this.q = q;
         this.r = r;
         this.s = s;
 
         //start coordinates of the hex for canvas location
-        this.x = x;
-        this.y = y;
+        let xy = [x,y]
+
+        xy = qrs2xy(q,r,s);
+
+        this.x = xy[0]*radius*sqrt3;
+        this.y = xy[1]*radius*sqrt3;
 
         this.highlighted = false;
 
@@ -20,7 +24,7 @@ class hex {
         ctx.beginPath();
         ctx.strokeStyle = stroke;
         for (var i = 0; i < 6; i++) {
-            ctx.lineTo(this.x + radius * Math.cos(a * i) + canvas.width / 2, this.y + radius * Math.sin(a * i) + canvas.height / 2);
+            ctx.lineTo(this.x + radius * Math.cos(a * i) * buffer + canvas.width / 2, this.y + radius * Math.sin(a * i) * buffer + canvas.height / 2);
         }
         ctx.closePath();
         ctx.stroke();
