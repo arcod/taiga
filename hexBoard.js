@@ -15,6 +15,35 @@ class hexBoard {
             this.hexTiles[i].draw();
         }
     }
+    getNearTilesID(id) {
+        return this.getNearTiles(this.hexTiles[id].q,this.hexTiles[id].r,this.hexTiles[id].s)
+    }
+    getNearTiles(q,r,s) {
+        var directions = [
+            [1,-1,0],
+            [0,-1,1], //up
+            [-1,0,1],
+            [-1,1,0],
+            [0,1,-1], //down
+            [1,0,-1],
+        ]
+
+        var ids = [];
+
+        for(let d in directions) {
+            let pos = [
+                q+directions[d][0],
+                r+directions[d][1],
+                s+directions[d][2],
+            ].join(",");
+
+            let gotten = this.qrs2id.get(pos);
+
+            ids.push(gotten);
+        }
+        
+        return ids;
+    }
     createTilesOld(layers) {
         //x and y are location of center, q r and s are cube coordinates for hex grid
         var x = 0;
@@ -97,6 +126,7 @@ class hexBoard {
 
         //create the center tile
         this.hexTiles.push(new hex(id, q, r, s, x, y));
+        this.qrs2id.set(`${q},${r},${s}`, id);
 
         id++;
 
