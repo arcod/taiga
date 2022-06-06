@@ -8,12 +8,19 @@ class hexBoard {
     draw() {
         for (var i in this.hexTiles) {
             if (this.hexTiles[i].isPointInside(mouseX, mouseY)) {
-                this.hexTiles[i].highlight(); //highlight the tile
+                this.hexTiles[i].highlightState = 1; //hover
+                
+                if(mouseDown) {
+                    this.hexTiles[i].highlightState = 2; //active
+                }
             } else {
-                this.hexTiles[i].highlight(false); //un-highlight the tile
+                this.hexTiles[i].highlightState = 0; //un-highlight the tile
             }
             this.hexTiles[i].draw();
         }
+    }
+    sortByHeight() {
+        this.hexTiles.sort((a, b) => (a.y > b.y) ? 1 : -1);
     }
     getNearTilesID(id) {
         return this.getNearTiles(this.hexTiles[id].q,this.hexTiles[id].r,this.hexTiles[id].s)
@@ -159,5 +166,7 @@ class hexBoard {
                 }
             }
         }
+
+        this.sortByHeight()
     }
 }

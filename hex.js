@@ -15,47 +15,72 @@ class hex {
         this.x = xy[0]*radius*sqrt3;
         this.y = xy[1]*radius*sqrt3;
 
-        this.highlighted = false;
+        this.highlightState = 0; //0=none, 1=hover, 2=active 
 
-        this.stroke = "black";
+        this.stroke = "white";
         this.radius = radius;
     }
-    drawCanv(stroke) {
+    drawHex(stroke, fill, offset = [0,0]) {
+        var lineWidth = 3;
+
         ctx.beginPath();
         ctx.strokeStyle = stroke;
+        ctx.lineWidth = lineWidth;
+        ctx.fillStyle = fill;
+
+
         for (var i = 0; i < 6; i++) {
-            ctx.lineTo(this.x + radius * Math.cos(a * i) * buffer + canvas.width / 2, this.y + radius * Math.sin(a * i) * buffer + canvas.height / 2);
+            ctx.lineTo(
+                this.x + offset[0] + radius * buffer * Math.cos(a * i) + canvas.width / 2,
+                this.y + offset[1] + radius * buffer * Math.sin(a * i) + canvas.height / 2
+            );
         }
         ctx.closePath();
-        ctx.stroke();
-
-        if(debug) {
-            var fontSize = 12;
-
-            ctx.textAlign = "center";
-            ctx.font = fontSize+"px Arial";
-            ctx.fillText("id="+this.id, this.x + canvas.width / 2, this.y+fontSize*0 + canvas.height / 2);
-            ctx.fillText("q="+this.q, this.x + canvas.width / 2, this.y+fontSize*1 + canvas.height / 2);
-            ctx.fillText("r="+this.r, this.x + canvas.width / 2, this.y+fontSize*2 + canvas.height / 2);
-            ctx.fillText("s="+this.s, this.x + canvas.width / 2, this.y+fontSize*3 + canvas.height / 2);
-        }
+        if(stroke) ctx.stroke();
+        if(fill) ctx.fill();
     }
-    highlight(bool = true) {
-        //without arg, it highlights it
-        //with arg, it sets the highlight state to the arg
+    drawDebug(offset) {
+        var fontSize = 12;
 
-        this.highlighted = bool;
+        ctx.textAlign = "center";
+        ctx.font = fontSize+"px Arial";
+        ctx.fillStyle = "white";
+        ctx.fillText("id="+this.id, this.x + offset[0] + canvas.width / 2, this.y+fontSize*0 + offset[1] + canvas.height / 2);
+        //ctx.fillText("q="+this.q, this.x + offset[0] + canvas.width / 2, this.y+fontSize*1 + offset[1] + canvas.height / 2);
+        //ctx.fillText("r="+this.r, this.x + offset[0] + canvas.width / 2, this.y+fontSize*2 + offset[1] + canvas.height / 2);
+        //ctx.fillText("s="+this.s, this.x + offset[0] + canvas.width / 2, this.y+fontSize*3 + offset[1] + canvas.height / 2);
     }
     draw(x, y) {
         //if args exist, draw there
         this.x = x || this.x;
         this.y = y || this.y;
 
-        var strokeToDraw = this.stroke;
+        var height = 10;
 
-        if (this.highlighted) strokeToDraw = "orange";
+        var drawInfo = { //primary
+            stroke: "rgb(255,255,255)",
+            fill: "rgb(0,0,0)",
+            shadow: "rgb(255,255,255)",
+            offset: [0,0],
+        }
 
-        this.drawCanv(strokeToDraw);
+        if (this.highlightState == 1) drawInfo = { //hover
+            stroke: "rgb(255,255,255)",
+            fill: "rgb(60,60,60)",
+            shadow: "rgb(255,255,255)",
+            offset: [0,7],
+        };
+
+        if (this.highlightState == 2) drawInfo = { //active
+            stroke: "rgb(255,255,255)",
+            fill: "rgb(60,60,60)",
+            shadow: "rgb(255,255,255)",
+            offset: [0,12],
+        };
+
+        //this.drawHex(null, drawInfo.shadow, [0,14]); //shadow
+        this.drawHex(drawInfo.stroke, drawInfo.fill, drawInfo.offset); //main
+        this.drawDebug(drawInfo.offset); //debug
     }
     isPointInside(x, y) {
         return (x >= this.x - this.radius
