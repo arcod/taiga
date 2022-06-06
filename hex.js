@@ -28,7 +28,6 @@ class hex {
         ctx.lineWidth = lineWidth;
         ctx.fillStyle = fill;
 
-
         for (var i = 0; i < 6; i++) {
             ctx.lineTo(
                 this.x + offset[0] + radius * buffer * Math.cos(a * i) + canvas.width / 2,
@@ -78,14 +77,22 @@ class hex {
             offset: [0,12],
         };
 
+        //drawInfo.offset = [0,0];
+
         //this.drawHex(null, drawInfo.shadow, [0,14]); //shadow
         this.drawHex(drawInfo.stroke, drawInfo.fill, drawInfo.offset); //main
-        this.drawDebug(drawInfo.offset); //debug
+        if(debug) this.drawDebug(drawInfo.offset); //debug
     }
+    /*
     isPointInside(x, y) {
         return (x >= this.x - this.radius
             && x <= this.x + this.radius
             && y >= this.y - this.radius
             && y <= this.y + this.radius);
+    }
+    */
+    isPointInside(x,y) {
+        return -sqrt3*Math.abs(x-this.x)-Math.abs(y-this.y) > -this.radius*sqrt3*1 && 
+        Math.abs(y-this.y) < this.radius*sqrt3*0.5
     }
 }
