@@ -19,6 +19,9 @@ class hex {
 
         this.stroke = "white";
         this.radius = radius;
+
+        this.time = performance.now() //for animation
+        this.animFrame = 0;
     }
     drawHex(stroke, fill, offset = [0,0]) {
         var lineWidth = 3;
@@ -31,7 +34,7 @@ class hex {
         for (var i = 0; i < 6; i++) {
             ctx.lineTo(
                 this.x + offset[0] + radius * buffer * Math.cos(a * i) + canvas.width / 2,
-                this.y + offset[1] + radius * buffer * Math.sin(a * i) + canvas.height / 2
+                this.y + offset[1] + radius * buffer * Math.sin(a * i) * sinLerp(0,1,this.animFrame) + canvas.height / 2
             );
         }
         ctx.closePath();
@@ -39,6 +42,8 @@ class hex {
         if(fill) ctx.fill();
     }
     drawDebug(offset) {
+        if(this.time + createAnimDuration > performance.now()) return; //if it hasnt finished animation, dont
+
         var fontSize = 12;
 
         ctx.textAlign = "center";
@@ -50,6 +55,8 @@ class hex {
         //ctx.fillText("s="+this.s, this.x + offset[0] + canvas.width / 2, this.y+fontSize*3 + offset[1] + canvas.height / 2);
     }
     draw(x, y) {
+        this.animFrame = Math.min((performance.now() - this.time)/createAnimDuration, 1)
+
         //if args exist, draw there
         this.x = x || this.x;
         this.y = y || this.y;

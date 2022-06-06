@@ -122,17 +122,15 @@ class hexBoard {
             x += (radius + 5) * 1.5;
         }
     }
-    createTiles(layers) {
+    async createTiles(layers) {
         //initialized variables
-        var x = 0;
-        var y = 0;
         var id = 0;
         var q = 0;
         var r = 0;
         var s = 0;
 
         //create the center tile
-        this.hexTiles.push(new hex(id, q, r, s, x, y));
+        this.hexTiles.push(new hex(id, q, r, s));
         this.qrs2id.set(`${q},${r},${s}`, id);
 
         id++;
@@ -158,11 +156,13 @@ class hexBoard {
 
                     if(move==0) continue loop1;
 
-                    this.hexTiles.push(new hex(id, q, r, s, x, y));
+                    this.hexTiles.push(new hex(id, q, r, s));
 
                     this.qrs2id.set(`${q},${r},${s}`, id);
 
                     id++;
+
+                    await wait(25);
                 }
             }
         }

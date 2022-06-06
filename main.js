@@ -1,6 +1,14 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+//anim stuff
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms)) //https://thewebdev.info/2022/02/09/how-to-create-pause-or-delay-in-a-javascript-for-loop
+
+const createAnimDuration = 500;
+
+function sinLerp(a,b,t) {
+	return Math.sin(t*Math.PI*0.5)*(b-a)+a
+}
 
 //calculations for hex drawing and size
 const a = 2 * Math.PI / 6;
@@ -19,8 +27,8 @@ function qrs2xy(q,r,s) { //https://www.reddit.com/r/askmath/comments/s6u33s/conv
 var debug = true;
 
 //mouse positions
-var mouseX = 0;
-var mouseY = 0;
+var mouseX = 5000;
+var mouseY = 5000;
 var mouseDown = false;
 
 var board = new hexBoard();
