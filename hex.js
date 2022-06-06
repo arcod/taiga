@@ -33,7 +33,7 @@ class hex {
 
         for (var i = 0; i < 6; i++) {
             ctx.lineTo(
-                this.x + offset[0] + radius * buffer * Math.cos(a * i) + canvas.width / 2,
+                this.x + offset[0] + radius * buffer * Math.cos(a * i) * sinLerp(0,1,this.animFrame) + canvas.width / 2,
                 this.y + offset[1] + radius * buffer * Math.sin(a * i) * sinLerp(0,1,this.animFrame) + canvas.height / 2
             );
         }
