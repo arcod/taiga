@@ -6,8 +6,11 @@ class hexBoard {
         this.qrs2id = new Map();
     }
     draw() {
+        document.body.style.cursor = "auto";
         for (var i in this.hexTiles) {
             if (this.hexTiles[i].isPointInside(mouseX, mouseY)) {
+                document.body.style.cursor = "pointer";
+
                 this.hexTiles[i].highlightState = 1; //hover
                 
                 if(mouseDown) {

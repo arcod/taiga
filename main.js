@@ -4,6 +4,7 @@ var ctx = canvas.getContext("2d");
 //anim stuff
 const createAnimDuration = 500;
 const createDelay = 25;
+const transitionSpeed = 1000; //idk what unit its in, it controls offset transition speed though.
 
 
 //calculations for hex drawing and size

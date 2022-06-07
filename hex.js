@@ -7,7 +7,7 @@ class hex {
         this.r = r;
         this.s = s;
 
-        //start coordinates of the hex for canvas location
+        //canvas location
         let xy = [x,y]
 
         xy = qrs2xy(q,r,s);
@@ -22,8 +22,15 @@ class hex {
 
         this.time = performance.now() + this.id*createDelay; // +this.id*createDelay to have creation delay
         this.animFrame = 0;
+
+
+        //for offset transiton
+        this.offset = [0,0];
+        this.prevOffset  = [0,0];
+        this.targetOffset = [0,0];
+        this.offsetTime = 0;
     }
-    drawHex(stroke, fill, offset = [0,0]) {
+    drawHex(stroke, fill, offset = this.offset) {
         var lineWidth = 3;
 
         ctx.beginPath();
@@ -41,7 +48,7 @@ class hex {
         if(stroke) ctx.stroke();
         if(fill) ctx.fill();
     }
-    drawDebug(offset) {
+    drawDebug(offset = this.offset) {
         //if(this.time + createAnimDuration > performance.now()) return; //if it hasnt finished animation, dont
 
         var fontSize = 12;
@@ -84,11 +91,19 @@ class hex {
             offset: [0,12],
         };
 
-        //drawInfo.offset = [0,0];
+        if(!arraysEqual(drawInfo.offset, this.targetOffset)) {
+            this.prevOffset = this.offset;
+            this.targetOffset = drawInfo.offset;
+
+            this.offsetTime = performance.now();
+        }
+
+
+        this.offset[1] = lerp(this.prevOffset[1], this.targetOffset[1], clamp((performance.now()-this.offsetTime)/transitionSpeed,0,1))
 
         //this.drawHex(null, drawInfo.shadow, [0,14]); //shadow
-        this.drawHex(drawInfo.stroke, drawInfo.fill, drawInfo.offset); //main
-        if(debug) this.drawDebug(drawInfo.offset); //debug
+        this.drawHex(drawInfo.stroke, drawInfo.fill); //main
+        if(debug) this.drawDebug(); //debug
     }
     /*
     isPointInside(x, y) {
