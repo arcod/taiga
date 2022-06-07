@@ -20,7 +20,7 @@ class hex {
         this.stroke = "white";
         this.radius = radius;
 
-        this.time = performance.now() //for animation
+        this.time = performance.now() + this.id*createDelay; // +this.id*createDelay to have creation delay
         this.animFrame = 0;
     }
     drawHex(stroke, fill, offset = [0,0]) {
@@ -42,7 +42,7 @@ class hex {
         if(fill) ctx.fill();
     }
     drawDebug(offset) {
-        if(this.time + createAnimDuration > performance.now()) return; //if it hasnt finished animation, dont
+        //if(this.time + createAnimDuration > performance.now()) return; //if it hasnt finished animation, dont
 
         var fontSize = 12;
 
@@ -55,7 +55,7 @@ class hex {
         //ctx.fillText("s="+this.s, this.x + offset[0] + canvas.width / 2, this.y+fontSize*3 + offset[1] + canvas.height / 2);
     }
     draw(x, y) {
-        this.animFrame = Math.min((performance.now() - this.time)/createAnimDuration, 1)
+        this.animFrame = clamp((performance.now() - this.time)/createAnimDuration,0,1);
 
         //if args exist, draw there
         this.x = x || this.x;

@@ -161,8 +161,6 @@ class hexBoard {
                     this.qrs2id.set(`${q},${r},${s}`, id);
 
                     id++;
-
-                    await wait(25);
                 }
             }
         }
