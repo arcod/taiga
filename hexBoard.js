@@ -125,7 +125,7 @@ class hexBoard {
             x += (radius + 5) * 1.5;
         }
     }
-    async createTiles(layers) {
+    createTiles(layers, seed) {
         //initialized variables
         var id = 0;
         var q = 0;

@@ -1,5 +1,5 @@
 class hex {
-    constructor(id, q, r, s, x, y) {
+    constructor(id, q, r, s) {
         this.id = id;
 
         //cube coordinates of tile
@@ -8,7 +8,7 @@ class hex {
         this.s = s;
 
         //canvas location
-        let xy = [x,y]
+        let xy = [null,null];
 
         xy = qrs2xy(q,r,s);
 
@@ -29,6 +29,12 @@ class hex {
         this.prevOffset  = [0,0];
         this.targetOffset = [0,0];
         this.offsetTime = 0;
+
+        //game stuff
+        this.determineBiome();
+    }
+    determineBiome() {
+        this.biome = 0; //Math.floor(rand(this.id)*1);
     }
     drawHex(stroke, fill, offset = this.offset) {
         var lineWidth = 3;
@@ -57,6 +63,7 @@ class hex {
         ctx.font = fontSize+"px Arial";
         ctx.fillStyle = "white";
         ctx.fillText("id="+this.id, this.x + offset[0] + canvas.width / 2, this.y+fontSize*0 + offset[1] + canvas.height / 2);
+        ctx.fillText("biome="+biomes[this.biome], this.x + offset[0] + canvas.width / 2, this.y+fontSize*1 + offset[1] + canvas.height / 2);
         //ctx.fillText("q="+this.q, this.x + offset[0] + canvas.width / 2, this.y+fontSize*1 + offset[1] + canvas.height / 2);
         //ctx.fillText("r="+this.r, this.x + offset[0] + canvas.width / 2, this.y+fontSize*2 + offset[1] + canvas.height / 2);
         //ctx.fillText("s="+this.s, this.x + offset[0] + canvas.width / 2, this.y+fontSize*3 + offset[1] + canvas.height / 2);

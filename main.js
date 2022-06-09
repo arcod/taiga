@@ -22,6 +22,20 @@ var mouseX = 5000;
 var mouseY = 5000;
 var mouseDown = false;
 
+var biomes = [
+	"plains",
+	"hills",
+	"forest",
+	"stream",
+	"shelter",
+	"mountain",
+	"goal",
+	"start",
+]
+
+//game
+var seed = Math.random();
+
 var board = new hexBoard();
 
 
